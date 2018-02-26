@@ -1,0 +1,53 @@
+describe('KinesisClient', function () {
+  const { mock, assert } = require('sinon')
+  const { expect } = require('chai')
+
+  beforeEach(function () {
+    delete require.cache[require.resolve('./KinesisClient')]
+
+    this.KinesisClient = require('./KinesisClient')
+    this.parameters = {
+      data: 'the data',
+      partitionKey: 'the partitionKey',
+      streamName: 'the streamName'
+    }
+
+    this.dependencies = {
+      Kinesis: null,
+      Promisify: mock(),
+      configuration: { anyConfiguration: 'anyValue' }
+    }
+
+    const kinesisPromisified = {
+      putRecord: mock()
+        .thrice()
+        .withExactArgs({
+          Data: this.parameters.data,
+          PartitionKey: this.parameters.partitionKey,
+          StreamName: this.parameters.streamName
+        })
+        .resolves('the result')
+    }
+
+    this.dependencies.Promisify
+      .withExactArgs({
+        ClassToBuild: this.dependencies.Kinesis,
+        methodsToPromisify: ['putRecord'],
+        constructorParameters: this.dependencies.configuration
+      })
+      .returns(kinesisPromisified)
+  })
+
+  it('returns putRecord call value', async function () {
+    const result = await this.KinesisClient.putRecord(this.parameters, this.dependencies)
+
+    expect(result).to.equal('the result')
+  })
+
+  it('instantiate Promisify just once for more calls', async function () {
+    await this.KinesisClient.putRecord(this.parameters, this.dependencies)
+    await this.KinesisClient.putRecord(this.parameters, this.dependencies)
+
+    assert.calledOnce(this.dependencies.Promisify)
+  })
+})
