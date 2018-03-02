@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Transport created for Winston using AWS Kinesis",
   "main": "WinstonKinesisTransport.js",
-  "scripts": {},
+  "scripts": {
+    "test": "NODE_ENV=test NODE_PATH=./ mocha \"AWS/**/*.test.js\" 'WinstonKinesisTransport.test.js' --colors --require Tests/support.js --reporter spec",
+    "lint": "standard -v \"Domain/**/*.js\" \"Infra/**/*.js\" \"seeders/*.js\" \"Features/**/*.js\""
+  },
   "keywords": [
     "winston",
     "transport",
@@ -14,5 +17,12 @@
   "dependencies": {
     "aws-sdk": "^2.202.0",
     "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "faker": "^4.1.0",
+    "sinon": "^4.4.2",
+    "standard": "^8.3.0"
   }
 }

@@ -4,7 +4,7 @@ const Promisify = require('./Promisify')
 const dependencies = { Kinesis, Promisify }
 
 const KinesisClient = {
-  sendRecordToKinesis({ data, partitionKey, streamName, configuration }, injection) {
+  sendRecordToKinesis ({ data, partitionKey, streamName, configuration }, injection) {
     return getKinesisInstance({ configuration }, injection).putRecord({
       Data: data,
       PartitionKey: partitionKey,
@@ -13,7 +13,7 @@ const KinesisClient = {
   }
 }
 
-function getKinesisInstance({ configuration }, injection) {
+function getKinesisInstance ({ configuration }, injection) {
   const { Kinesis, Promisify } = Object.assign({}, dependencies, injection)
 
   if (!KinesisClient.kinesisInstance) {

@@ -11,19 +11,19 @@ const dependencies = {
 const LOGGED = 'logged'
 
 class WinstonKinesisTransport extends Transport {
-  constructor({ options }, injection) {
+  constructor ({ options }, injection) {
     super(options)
     const { log, random, sendRecordToKinesis } = Object.assign({}, dependencies, injection)
     this.injection = { log, random, sendRecordToKinesis }
     this.options = options
   }
 
-  onSuccess(data, callback) {
+  onSuccess (data, callback) {
     this.emit(LOGGED)
     callback(null, data)
   }
 
-  async log(level, message, meta, callback) {
+  async log (level, message, meta, callback) {
     const { transformer } = this.options
 
     const options = Object.assign({
