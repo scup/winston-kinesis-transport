@@ -32,7 +32,7 @@ describe ('KinesisClient', function () {
     this.dependencies.Promisify
       .withExactArgs({
         ClassToBuild: this.dependencies.Kinesis,
-        methodsToPromisify: ['putRecord'],
+        methodsToPromisify: ['sendRecordToKinesis'],
         constructorParameters: this.parameters.configuration
       })
       .returns(kinesisPromisified)

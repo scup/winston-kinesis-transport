@@ -19,7 +19,7 @@ function getKinesisInstance ({ configuration }, injection) {
   if (!KinesisClient.kinesisInstance) {
     KinesisClient.kinesisInstance = new Promisify({
       ClassToBuild: Kinesis,
-      methodsToPromisify: ['putRecord'],
+      methodsToPromisify: ['sendRecordToKinesis'],
       constructorParameters: configuration
     })
   }
