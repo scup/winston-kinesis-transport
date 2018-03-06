@@ -1,5 +1,5 @@
 describe('WinstonKinesisTransport', function () {
-  const { mock, assert } = require('sinon')
+  const { mock } = require('sinon')
 
   const WinstonKinesisTransport = require('./WinstonKinesisTransport')
 
@@ -26,7 +26,8 @@ describe('WinstonKinesisTransport', function () {
         sendRecordToKinesis: mock().withExactArgs({
           data: kinesisData,
           partitionKey: 'random value',
-          streamName: options.streamName
+          streamName: options.streamName,
+          configuration: options.configuration
         }).resolves(this.sendRecordToKinesisResult),
         random: mock().returns('random value')
       }
@@ -40,7 +41,8 @@ describe('WinstonKinesisTransport', function () {
           message,
           meta: transformedMeta,
           streamName: options.streamName,
-          transformer: options.transformer
+          transformer: options.transformer,
+          configuration: options.configuration
         })
         .returns(kinesisData)
 
@@ -54,11 +56,6 @@ describe('WinstonKinesisTransport', function () {
 
     it('emits logged event to parent class', function () {
       this.instanceMock.verify()
-    })
-
-    it('calls callback with data from sendRecordToKinesis', function () {
-      assert.calledOnce(this.callback)
-      assert.calledWithExactly(this.callback, null, this.sendRecordToKinesis)
     })
   })
 
@@ -77,7 +74,7 @@ describe('WinstonKinesisTransport', function () {
 
       const callback = mock().withExactArgs(error)
 
-      const winstonKinesisTransport = new WinstonKinesisTransport(options, dependencies)
+      const winstonKinesisTransport = new WinstonKinesisTransport({ options }, dependencies)
 
       await winstonKinesisTransport.log(null, null, null, callback)
 
