@@ -1,11 +1,11 @@
 const { Transport } = require('winston')
-const { sendRecordToKinesis } = require('./AWS/KinesisClient')
+const { putRecord } = require('./AWS/KinesisClient')
 const { log } = require('winston/lib/winston/common')
 
 const dependencies = {
   log,
   random: Math.random,
-  sendRecordToKinesis
+  putRecord
 }
 
 const LOGGED = 'logged'
@@ -13,8 +13,8 @@ const LOGGED = 'logged'
 class WinstonKinesisTransport extends Transport {
   constructor ({ options }, injection) {
     super(options)
-    const { log, random, sendRecordToKinesis } = Object.assign({}, dependencies, injection)
-    this.injection = { log, random, sendRecordToKinesis }
+    const { log, random, putRecord } = Object.assign({}, dependencies, injection)
+    this.injection = { log, random, putRecord }
     this.options = options
   }
 
@@ -44,7 +44,7 @@ class WinstonKinesisTransport extends Transport {
     }
 
     try {
-      const data = await this.injection.sendRecordToKinesis(kinesisObject)
+      const data = await this.injection.putRecord(kinesisObject)
       this.onSuccess(data, callback)
     } catch (error) {
       callback(error)

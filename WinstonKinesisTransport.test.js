@@ -19,16 +19,16 @@ describe('WinstonKinesisTransport', function () {
 
       const kinesisData = { anyData: 'anyValue' }
 
-      this.sendRecordToKinesisResult = 'any sendRecordToKinesisResult'
+      this.putRecordResult = 'any putRecordResult'
 
       const dependencies = {
         log: mock(),
-        sendRecordToKinesis: mock().withExactArgs({
+        putRecord: mock().withExactArgs({
           data: kinesisData,
           partitionKey: 'random value',
           streamName: options.streamName,
           configuration: options.configuration
-        }).resolves(this.sendRecordToKinesisResult),
+        }).resolves(this.putRecordResult),
         random: mock().returns('random value')
       }
 
@@ -59,12 +59,12 @@ describe('WinstonKinesisTransport', function () {
     })
   })
 
-  context('when an error happen during sendRecordToKinesis into Kinesis', function () {
+  context('when an error happen during putRecord into Kinesis', function () {
     it('calls callback with error thrown', async function () {
       const error = new Error('put record error')
       const dependencies = {
         log: mock(),
-        sendRecordToKinesis: mock().rejects(error),
+        putRecord: mock().rejects(error),
         random: mock()
       }
 

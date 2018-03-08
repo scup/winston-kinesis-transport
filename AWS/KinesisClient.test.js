@@ -32,21 +32,21 @@ describe ('KinesisClient', function () {
     this.dependencies.Promisify
       .withExactArgs({
         ClassToBuild: this.dependencies.Kinesis,
-        methodsToPromisify: ['sendRecordToKinesis'],
+        methodsToPromisify: ['putRecord'],
         constructorParameters: this.parameters.configuration
       })
       .returns(kinesisPromisified)
   })
 
   it('returns putRecord call value', async function () {
-    const result = await this.KinesisClient.sendRecordToKinesis(this.parameters, this.dependencies)
+    const result = await this.KinesisClient.putRecord(this.parameters, this.dependencies)
 
     expect(result).to.equal('the result')
   })
 
   it('instantiate Promisify just once for more calls', async function () {
-    await this.KinesisClient.sendRecordToKinesis(this.parameters, this.dependencies)
-    await this.KinesisClient.sendRecordToKinesis(this.parameters, this.dependencies)
+    await this.KinesisClient.putRecord(this.parameters, this.dependencies)
+    await this.KinesisClient.putRecord(this.parameters, this.dependencies)
 
     assert.calledOnce(this.dependencies.Promisify)
   })
