@@ -1,6 +1,6 @@
 {
   "name": "winston-kinesis-transport",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Transport created for Winston using AWS Kinesis",
   "main": "WinstonKinesisTransport.js",
   "scripts": {
@@ -14,10 +14,8 @@
   ],
   "author": "Sprinklr",
   "license": "ISC",
-  "dependencies": {
-    "winston": "^2.4.0"
-  },
   "peerDependencies": {
+    "winston": ">=2.4.0",
     "aws-sdk": ">=2.0.0"
   },
   "devDependencies": {
@@ -26,6 +24,7 @@
     "chai-as-promised": "^6.0.0",
     "faker": "^4.1.0",
     "sinon": "^4.4.2",
-    "standard": "^8.3.0"
+    "standard": "^8.3.0",
+    "winston": "^2.4.0"
   }
 }
