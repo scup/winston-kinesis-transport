@@ -15,10 +15,13 @@
   "author": "Sprinklr",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.202.0",
     "winston": "^2.4.0"
   },
+  "peerDependencies": {
+    "aws-sdk": ">=2.0.0"
+  },
   "devDependencies": {
+    "aws-sdk": "^2.202.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "faker": "^4.1.0",
