@@ -3,9 +3,13 @@
     Add to your package.json dependencies 
 
 ```javascript
-"winston-kinesis-transport": "git+ssh://git@github.com:scup/winston-kinesis-transport#master"
+ npm install --save winston-kinesis-transport
 ```
-    $ yarn
+or
+
+```javascript
+ yarn add --save winston-kinesis-transport
+```
 
 ### Configuration
 
