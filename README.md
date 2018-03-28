@@ -8,7 +8,7 @@
 or
 
 ```javascript
- yarn add --save winston-kinesis-transport
+ yarn add winston-kinesis-transport
 ```
 
 ### Configuration
